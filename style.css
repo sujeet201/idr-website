@@ -1,0 +1,242 @@
+/* --- 1. THEME ENGINE (Advanced Variables) --- */
+:root[data-theme="dark"] {
+    --bg: #050a15; 
+    --surface: #0d1526;
+    --text: #ffffff;
+    --text-dim: rgba(255, 255, 255, 0.6);
+    --orange: #FF6600;
+    --orange-glow: rgba(255, 102, 0, 0.5);
+    --accent-blue: #00d2ff; /* Cyber Blue for extra color */
+    --accent-purple: #9d50bb; /* Royal Purple accent */
+    --border: rgba(255, 255, 255, 0.1);
+    --glass: rgba(255, 255, 255, 0.03);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="light"] {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --text-dim: #64748b;
+    --orange: #FF6600;
+    --orange-glow: rgba(255, 102, 0, 0.2);
+    --accent-blue: #0ea5e9;
+    --accent-purple: #8b5cf6;
+    --border: rgba(0, 0, 0, 0.05);
+    --glass: rgba(255, 255, 255, 0.7);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* --- 2. GLOBAL RESET & SMOOTHING --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Hardware-accelerated transitions for every property */
+    transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.4s ease, 
+                border-color 0.4s ease, 
+                transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.4s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* --- 3. DYNAMIC HEADER & LOGO --- */
+header {
+    position: fixed;
+    top: 0; width: 100%;
+    padding: 1.5rem 0;
+    z-index: 1000;
+}
+
+header.scrolled {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+.nav-links a:hover {
+    color: var(--orange);
+    opacity: 1;
+}
+
+/* --- 4. COLORFUL HERO & BLOOM EFFECT --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Colorful Bloom Background */
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+    top: -200px; right: -100px;
+    z-index: 0;
+    filter: blur(80px);
+}
+
+.hero h1 {
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 800;
+    line-height: 0.9;
+    text-align: center;
+    z-index: 1;
+    background: linear-gradient(135deg, var(--text) 30%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- 5. ENHANCED FEATURE CARDS (Magnetic Bubble) --- */
+.feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* Animated Border Gradient on Hover */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--accent-blue), var(--accent-purple));
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+    transform-origin: left;
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-card strong {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, var(--orange), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- 6. ADVANCED INTERACTIVE BUTTONS --- */
+.btn {
+    padding: 1.2rem 2.8rem;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: var(--orange);
+    color: white;
+}
+
+/* The Bubble Ripple Effect */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: -1;
+}
+
+.btn:hover::after {
+    width: 400px; height: 400px;
+}
+
+/* --- 7. THEME SWITCHER UI --- */
+.theme-switch {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px; height: 60px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 10px 30px var(--orange-glow);
+    z-index: 2000;
+    border: none;
+}
+
+/* --- 8. PIPELINE TRACKS --- */
+.step {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.step strong {
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+}
+
+/* --- 9. FORM REFINEMENT --- */
+.form-grid input, .form-grid textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.form-grid input:focus {
+    border-color: var(--orange);
+    outline: none;
+    box-shadow: 0 0 20px var(--orange-glow);
+}

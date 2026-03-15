@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDR | Advanced Digital Risk Institute</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --orange: #FF6600;
+            --orange-glow: rgba(255, 102, 0, 0.4);
+            --black: #050505;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Advanced Smooth Reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Header & Nav --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            transition: 0.4s;
+        }
+        header.scrolled {
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo { display: flex; align-items: center; text-decoration: none; }
+
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--orange); }
+
+        /* --- Hero: Motion & Depth --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at 20% 30%, #1a1a1a 0%, #050505 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: var(--orange);
+            filter: blur(150px);
+            border-radius: 50%;
+            top: -100px; right: -100px;
+            opacity: 0.2;
+        }
+
+        .hero-content { text-align: center; z-index: 2; padding: 0 2rem; }
+        .hero h1 { 
+            font-size: clamp(3rem, 8vw, 6rem); 
+            line-height: 1; 
+            margin-bottom: 2rem;
+            background: linear-gradient(to bottom, #fff 40%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-group { display: flex; gap: 1rem; justify-content: center; }
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.4s;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .btn-primary { background: var(--orange); color: white; border: none; }
+        .btn-primary:hover { background: #ff8533; transform: scale(1.05); }
+        .btn-secondary { border: 1px solid var(--border); color: white; background: var(--glass); }
+
+        /* --- Advanced Innovation Section --- */
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .innovation-content h2 { font-size: 3rem; margin-bottom: 1.5rem; }
+        
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 1rem;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        .feature-card:hover {
+            border-color: var(--orange);
+            background: rgba(255, 102, 0, 0.05);
+        }
+
+        /* --- The Pipeline (Advanced UI) --- */
+        .pipeline-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 5rem 0;
+        }
+        .step {
+            height: 200px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .step::after {
+            content: attr(data-num);
+            position: absolute;
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(255, 102, 0, 0.1);
+            bottom: -20px; right: -10px;
+        }
+
+        /* --- Contact Form --- */
+        .contact-section {
+            background: #0a0a0a;
+            padding: 6rem 2rem;
+            border-radius: 40px 40px 0 0;
+        }
+        .form-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        input, textarea {
+            width: 100%;
+            background: #111;
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            color: white;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        textarea { grid-column: span 2; }
+        input:focus { border-color: var(--orange); outline: none; }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 968px) {
+            .nav-links { display: none; }
+            .innovation-grid, .form-grid { grid-template-columns: 1fr; }
+            .pipeline-container { grid-template-columns: 1fr 1fr; }
+            textarea { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <a href="#home" class="logo" aria-label="IDR Home">
+                <svg width="180" height="45" viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20L30 10L50 20V40L30 50L10 40V20Z" fill="none" stroke="white" stroke-width="2"/>
+                    <path d="M10 20L30 30L50 20M30 30V50" fill="none" stroke="white" stroke-width="2"/>
+                    <path d="M30 10L50 20L30 30L10 20L30 10Z" fill="#FF6600" opacity="0.9"/>
+                    <text x="65" y="38" fill="white" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="24">IDR</text>
+                    <text x="115" y="38" fill="white" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" font-size="14" opacity="0.6" letter-spacing="1">INSTITUTE</text>
+                </svg>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">Academic</a></li>
+                <li><a href="#innovation">Innovation</a></li>
+                <li><a href="#academy">Academy</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="btn btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.7rem;">Student Portal</div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="reveal">Managing Risk<br>In An AI World</h1>
+            <p class="reveal" style="max-width: 600px; margin: 0 auto 3rem; opacity: 0.6;">
+                The Institute of Digital Risk bridges the gap between high-level academic research and frontline industry deployment.
+            </p>
+            <div class="cta-group reveal">
+                <a href="#contact" class="btn btn-primary">Partner with us</a>
+                <a href="#innovation" class="btn btn-secondary">Explore Innovation</a>
+            </div>
+        </div>
+    </section>
+
+    <main style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+        <section id="about" class="reveal" style="padding: 8rem 0;">
+            <div style="max-width: 800px;">
+                <h4 style="color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">The Hybrid Model</h4>
+                <h2 style="font-size: 3rem; margin-bottom: 2rem;">Industry-led training meets UK University research.</h2>
+                <p style="font-size: 1.2rem; opacity: 0.6;">We don't just teach theory. We build practitioners. IDR embeds students and early-career pros into real-world, high-consequence environments within financial services and critical infrastructure.</p>
+            </div>
+        </section>
+
+        <section id="innovation" class="reveal">
+            <div class="innovation-grid">
+                <div class="innovation-content">
+                    <h4 style="color: var(--orange);">LABS & INCUBATION</h4>
+                    <h2>The Innovation Hub</h2>
+                    <p style="opacity: 0.6; margin-bottom: 2rem;">Our Innovation arm focuses on IP development. We are currently building automated risk models for NIS2 compliance and AI Governance frameworks.</p>
+                    
+                    <div class="feature-card">
+                        <strong>01 / AI Risk Models</strong>
+                        <p style="font-size: 0.9rem; opacity: 0.5;">Proprietary algorithms for detecting adversarial attacks on Large Language Models.</p>
+                    </div>
+                    <div class="feature-card">
+                        <strong>02 / Regulatory Sandboxes</strong>
+                        <p style="font-size: 0.9rem; opacity: 0.5;">Controlled environments for testing ISO 27001 readiness in fintech.</p>
+                    </div>
+                </div>
+                <div style="background: var(--orange); height: 500px; border-radius: 20px; opacity: 0.1; display: flex; align-items: center; justify-content: center; font-size: 5rem; font-weight: 800;">
+                    IP_IDR
+                </div>
+            </div>
+        </section>
+
+        <section id="academy" class="reveal" style="padding: 8rem 0;">
+            <h2 style="text-align: center;">The Deployment Pipeline</h2>
+            <div class="pipeline-container">
+                <div class="step" data-num="1"><strong>IDENTIFY</strong></div>
+                <div class="step" data-num="2"><strong>TRAIN</strong></div>
+                <div class="step" data-num="3"><strong>CERTIFY</strong></div>
+                <div class="step" data-num="4"><strong>DEPLOY</strong></div>
+            </div>
+        </section>
+    </main>
+
+    <section id="contact" class="contact-section reveal">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2>Apply to Join the Institute</h2>
+            <p style="opacity: 0.5;">Whether you are a university partner or a practitioner, let's connect.</p>
+        </div>
+        <form class="form-grid">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <select style="grid-column: span 2; padding: 1.2rem; background: #111; color: #888; border: 1px solid var(--border); border-radius: 8px;">
+                <option>Select Interest</option>
+                <option>Academy Enrollment</option>
+                <option>Advisory Services</option>
+                <option>Innovation Partnership</option>
+            </select>
+            <textarea placeholder="Tell us about your background in digital risk..." rows="6"></textarea>
+            <button class="btn btn-primary" style="grid-column: span 2;">Submit Application</button>
+        </form>
+    </section>
+
+    <footer style="padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); opacity: 0.4; font-size: 0.8rem;">
+        &copy; 2026 Institute of Digital Risk. Built for Regulated Environments.
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // 1. Scroll Reveal Logic
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 2. Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 3. Simple Form Feedback
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = "Submitting...";
+            setTimeout(() => {
+                btn.innerHTML = "Application Sent ✓";
+                btn.style.background = "#28a745";
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
