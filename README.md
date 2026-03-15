@@ -1,1 +1,2 @@
 # idr-website
+The IDR logo uses a geometric cube-inspired shape to represent structure, stability and resilience in digital systems. The orange colour represents innovation and forward-looking technology leadership, while black and white provide strong contrast and a professional minimalist appearance. The cube structure symbolises interconnected digital risk areas such as cyber security, AI governance and technology risk management. A clean sans-serif typography ensures readability across digital platforms including mobile headers and favicon sizes.
